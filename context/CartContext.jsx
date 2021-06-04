@@ -19,11 +19,9 @@ export const CartContextProvider = ({ children }) => {
       const index = currentCart.findIndex((item) => item.id === product.id)
 
       if (index >= 0) {
-        currentCart[index].quantity = currentCart[index].quantity + qty
-        currentCart[index].totalPrice =
-          currentCart[index].price * currentCart[index].quantity
+        addProductQuantity(product.id, qty, index)
 
-        return currentCart
+        return
       } else {
         product.quantity = qty
         product.totalPrice = product.price * product.quantity
@@ -35,6 +33,18 @@ export const CartContextProvider = ({ children }) => {
     addAlert(true, `${qty} ${product.title} se ha agregado al carrito`)
   }
 
+  const addProductQuantity = (id, qty, cartIndex) => {
+    setCart((currentCart) => {
+      const index = cartIndex || currentCart.findIndex((item) => item.id === id)
+
+      currentCart[index].quantity = currentCart[index].quantity + qty
+      currentCart[index].totalPrice =
+        currentCart[index].price * currentCart[index].quantity
+
+      return [...currentCart]
+    })
+  }
+
   const removeProduct = (id, qty) => {
     setCart((currentCart) => {
       const index = currentCart.findIndex((item) => item.id === id)
@@ -44,7 +54,7 @@ export const CartContextProvider = ({ children }) => {
         currentCart[index].totalPrice =
           currentCart[index].price * currentCart[index].quantity
 
-        return currentCart
+        return [...currentCart]
       } else {
         return currentCart.filter((product) => product.id !== id)
       }
@@ -63,6 +73,7 @@ export const CartContextProvider = ({ children }) => {
         alerts,
         removeAlert,
         addProduct,
+        addProductQuantity,
         removeProduct,
       }}
     >

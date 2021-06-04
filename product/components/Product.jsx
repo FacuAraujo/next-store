@@ -11,6 +11,18 @@ const Product = ({ product }) => {
 
   const { title, img, description, price } = product
 
+  const handleIncrementQuantity = () => {
+    setQty((current) => current + 1)
+  }
+
+  const handleDecrementQuantity = () => {
+    setQty((current) => {
+      if (current === 1) return current
+
+      return current - 1
+    })
+  }
+
   return (
     <article className="product">
       <div className="product_content">
@@ -23,7 +35,14 @@ const Product = ({ product }) => {
       </div>
 
       <div>
-        <ProductQuantity qty={qty} setQty={setQty} />
+        <div className="product_product-quantity-wrapper">
+          <ProductQuantity
+            handleDecrement={handleDecrementQuantity}
+            handleIncrement={handleIncrementQuantity}
+            qty={qty}
+          />
+        </div>
+
         <AddToCart handleClick={() => addProduct(product, qty)}>
           Agregar al carrito
         </AddToCart>

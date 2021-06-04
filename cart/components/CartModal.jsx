@@ -9,7 +9,9 @@ import CartProduct from './CartProduct'
 import OrderButton from './OrderButton'
 
 const CartModal = ({ setShowModal }) => {
-  const { cart, total, removeProduct } = useContext(CartContext)
+  const { cart, total, removeProduct, addProductQuantity } = useContext(
+    CartContext
+  )
   let modalRef = useRef(null)
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const CartModal = ({ setShowModal }) => {
           <CartProduct
             key={cartItem.id}
             {...cartItem}
+            addProduct={addProductQuantity}
             removeProduct={removeProduct}
           />
         ))}

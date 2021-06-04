@@ -1,23 +1,20 @@
-const ProductQuantity = ({qty, setQty}) => {
-    const incrementQty = () => setQty((current) => current + 1);
+const ProductQuantity = ({ qty, handleIncrement, handleDecrement }) => {
+  return (
+    <div className="product-quantity">
+      <button className="product-quantity_button" onClick={handleDecrement}>
+        -
+      </button>
+      <input
+        readOnly
+        className="product-quantity_val"
+        type="number"
+        value={qty}
+      />
+      <button className="product-quantity_button" onClick={handleIncrement}>
+        +
+      </button>
+    </div>
+  )
+}
 
-    const decrementQty = () => {
-        if (qty === 1) return;
-
-        setQty((current) => current - 1);
-    };
-
-    return (
-        <div className="product-quantity">
-            <button className="product-quantity_button" onClick={decrementQty}>
-                -
-            </button>
-            <input type="number" className="product-quantity_val" value={qty} readOnly />
-            <button className="product-quantity_button" onClick={incrementQty}>
-                +
-            </button>
-        </div>
-    );
-};
-
-export default ProductQuantity;
+export default ProductQuantity
